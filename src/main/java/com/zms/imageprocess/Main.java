@@ -11,23 +11,31 @@ import android.widget.Button;
 
 
 public class Main extends Activity {
-    private Button btnPrimary;
+    private Button btnPrimary, btnColorMatrix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        btnPrimary = (Button) findViewById(R.id.btnPrimary);
+        btnPrimary = (Button) findViewById(R.id.btnPrimaryColor);
         btnPrimary.setOnClickListener(new MyOnClickListener());
+
+        btnColorMatrix = (Button) findViewById(R.id.btnColorMatrix);
+        btnColorMatrix.setOnClickListener(new MyOnClickListener());
+
     }
 
     class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.btnPrimary:
+                case R.id.btnPrimaryColor:
                     Intent intent1 = new Intent(Main.this, PrimaryColorActivity.class);
                     startActivity(intent1);
+                    break;
+                case R.id.btnColorMatrix:
+                    Intent intent2 = new Intent(Main.this, ColorMatrixActivity.class);
+                    startActivity(intent2);
                     break;
             }
         }

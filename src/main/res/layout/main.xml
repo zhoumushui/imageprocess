@@ -15,16 +15,16 @@
         android:text="@string/hello_world" />
 
     <Button
-        android:id="@+id/btnPrimary"
+        android:id="@+id/btnPrimaryColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PrimaryColor Demo" />
 
     <Button
-        android:id="@+id/btn1"
+        android:id="@+id/btnColorMatrix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="ColorMatrix Demo" />
 
     <Button
         android:id="@+id/btn2"

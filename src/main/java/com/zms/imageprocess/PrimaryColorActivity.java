@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -28,6 +29,7 @@ public class PrimaryColorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.primary_color);
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.map);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -97,7 +99,7 @@ public class PrimaryColorActivity extends Activity {
                         imageView.setImageBitmap(bitmap);
                         imageFlag = 0;
                     }
-                    break;
+                    // break;
                 case R.id.btnReset:
                     imageView.setImageBitmap(ImageHelper.ImageEffect(bitmap, 0.0f, 1.0f, 1.0f));
                     seekBarHue.setProgress(MID_VALUE);
