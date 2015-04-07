@@ -11,7 +11,7 @@ import android.widget.Button;
 
 
 public class Main extends Activity {
-    private Button btnPrimary, btnColorMatrix;
+    private Button btnPrimary, btnColorMatrix, btnPixelsEffect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,9 @@ public class Main extends Activity {
 
         btnColorMatrix = (Button) findViewById(R.id.btnColorMatrix);
         btnColorMatrix.setOnClickListener(new MyOnClickListener());
+
+        btnPixelsEffect = (Button) findViewById(R.id.btnPixelsEffect);
+        btnPixelsEffect.setOnClickListener(new MyOnClickListener());
 
     }
 
@@ -36,6 +39,10 @@ public class Main extends Activity {
                 case R.id.btnColorMatrix:
                     Intent intent2 = new Intent(Main.this, ColorMatrixActivity.class);
                     startActivity(intent2);
+                    break;
+                case R.id.btnPixelsEffect:
+                    Intent intent3 = new Intent(Main.this, PixelsEffectActivity.class);
+                    startActivity(intent3);
                     break;
             }
         }

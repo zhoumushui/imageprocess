@@ -19,6 +19,7 @@
 
         <activity android:name=".PrimaryColorActivity" />
         <activity android:name=".ColorMatrixActivity" />
+        <activity android:name=".PixelsEffectActivity" />
     </application>
 
 </manifest>
