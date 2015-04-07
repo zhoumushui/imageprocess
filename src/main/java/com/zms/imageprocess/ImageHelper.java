@@ -1,11 +1,19 @@
 package com.zms.imageprocess;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
+import java.util.Random;
 
 /**
  * Created by Administrator on 2015/4/1.
@@ -47,11 +55,11 @@ public class ImageHelper {
 
 
     public static Bitmap handleImage(Bitmap bm, int effect) {
-        Bitmap bmp = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(),
+        Bitmap bitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(),
                 Bitmap.Config.ARGB_8888);
         int width = bm.getWidth();
         int height = bm.getHeight();
-        int color;
+        int color = 0;
         int r, g, b, a, r1, g1, b1;
         int[] oldPx = new int[width * height];
         int[] newPx = new int[width * height];
@@ -88,10 +96,9 @@ public class ImageHelper {
                     }
                     newPx[i] = Color.argb(a, r, g, b);
                 }
-                bmp.setPixels(newPx, 0, width, 0, 0, width, height);
+                bitmap.setPixels(newPx, 0, width, 0, 0, width, height);
                 break;
             case 1: // 怀旧效果
-                bm.getPixels(oldPx, 0, bm.getWidth(), 0, 0, width, height);
                 for (int i = 0; i < width * height; i++) {
                     color = oldPx[i];
                     a = Color.alpha(color);
@@ -114,10 +121,9 @@ public class ImageHelper {
                     }
                     newPx[i] = Color.argb(a, r1, g1, b1);
                 }
-                bmp.setPixels(newPx, 0, width, 0, 0, width, height);
+                bitmap.setPixels(newPx, 0, width, 0, 0, width, height);
                 break;
             case 2: // 浮雕效果
-                color = 0;
                 int colorBefore = 0;
                 for (int i = 1; i < width * height; i++) {
                     colorBefore = oldPx[i - 1];
@@ -145,10 +151,69 @@ public class ImageHelper {
                     }
                     newPx[i] = Color.argb(a, r, g, b);
                 }
-                bmp.setPixels(newPx, 0, width, 0, 0, width, height);
+                bitmap.setPixels(newPx, 0, width, 0, 0, width, height);
+                break;
+            case 3: // 灰度
+                int alpha = 0xFF << 24;
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        int grey = oldPx[width * i + j];
+                        int red = ((grey & 0x00FF0000) >> 16);
+                        int green = ((grey & 0x0000FF00) >> 8);
+                        int blue = (grey & 0x000000FF);
+                        grey = (int) ((float) red * 0.3 + (float) green * 0.59 + (float) blue * 0.11);
+                        grey = alpha | (grey << 16) | (grey << 8) | grey;
+                        newPx[width * i + j] = grey;
+                    }
+                }
+                bitmap.setPixels(newPx, 0, width, 0, 0, width, height);
+                break;
+            case 4: // 圆角
+                int roundPx = 55;
+                Canvas canvas = new Canvas(bitmap);
+
+                int colorRound = 0xff424242;
+                Paint paint = new Paint();
+                Rect rect = new Rect(0, 0, bm.getWidth(), bm.getHeight());
+                RectF rectF = new RectF(rect);
+
+                paint.setAntiAlias(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(colorRound);
+                canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(bm, rect, rect, paint);
+                break;
+            case 5: // 油画
+                int Radio = 0;
+                Random rnd = new Random();
+                int iModel = 10;
+                int i = width - iModel;
+                while (i > 1) {
+                    int j = height - iModel;
+                    while (j > 1) {
+                        int iPos = rnd.nextInt(10) % iModel;
+                        color = bm.getPixel(i + iPos, j + iPos);
+                        bitmap.setPixel(i, j, color);
+                        j = j - 1;
+                    }
+                    i = i - 1;
+                }
+                break;
+            case 6: // 左右对称
+                Canvas canvas2 = new Canvas(bitmap);
+                canvas2.drawColor(Color.BLACK);
+                canvas2.drawBitmap(bm, 0, 0, null);
+                Matrix matrix = new Matrix();
+                float[] values = {-1f, 0.0f, 0.0f, 0.0f, 1f, 0.0f, 0.0f, 0.0f, 1.0f};
+                matrix.setValues(values);
+                bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(),
+                        matrix, true);
+                canvas2.drawBitmap(bitmap, bm.getWidth(), 0, null);
                 break;
         }
-        return bmp;
+        return bitmap;
     }
 
 }

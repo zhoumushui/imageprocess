@@ -14,6 +14,7 @@ import android.widget.ImageView;
 public class PixelsEffectActivity extends Activity {
     private ImageView imageView;
     private Button btnRaw, btnNegative, btnOld, btnRelief;
+    private Button btnGrey, btnRound, btnOil, btnMirror;
     private Bitmap bitmap;
 
     @Override
@@ -28,11 +29,20 @@ public class PixelsEffectActivity extends Activity {
         btnNegative = (Button) findViewById(R.id.btnNegative);
         btnOld = (Button) findViewById(R.id.btnOld);
         btnRelief = (Button) findViewById(R.id.btnRelief);
+        btnGrey = (Button) findViewById(R.id.btnGrey);
+        btnRound = (Button) findViewById(R.id.btnRound);
+        btnOil = (Button) findViewById(R.id.btnOil);
+        btnMirror = (Button) findViewById(R.id.btnMirror);
 
         btnRaw.setOnClickListener(new MyOnClickListener());
         btnNegative.setOnClickListener(new MyOnClickListener());
         btnOld.setOnClickListener(new MyOnClickListener());
         btnRelief.setOnClickListener(new MyOnClickListener());
+        btnGrey.setOnClickListener(new MyOnClickListener());
+        btnRound.setOnClickListener(new MyOnClickListener());
+        btnOil.setOnClickListener(new MyOnClickListener());
+        btnMirror.setOnClickListener(new MyOnClickListener());
+
         imageView.setImageBitmap(bitmap);
     }
 
@@ -51,6 +61,18 @@ public class PixelsEffectActivity extends Activity {
                     break;
                 case R.id.btnRelief:
                     imageView.setImageBitmap(ImageHelper.handleImage(bitmap, 2));
+                    break;
+                case R.id.btnGrey:
+                    imageView.setImageBitmap(ImageHelper.handleImage(bitmap, 3));
+                    break;
+                case R.id.btnRound:
+                    imageView.setImageBitmap(ImageHelper.handleImage(bitmap, 4));
+                    break;
+                case R.id.btnOil:
+                    imageView.setImageBitmap(ImageHelper.handleImage(bitmap, 5));
+                    break;
+                case R.id.btnMirror:
+                    imageView.setImageBitmap(ImageHelper.handleImage(bitmap, 6));
                     break;
             }
         }
